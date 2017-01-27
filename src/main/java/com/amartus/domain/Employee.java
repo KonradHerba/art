@@ -29,6 +29,8 @@ public class Employee {
      * */
     private ArrayList<String> assignedProjects;
 
+    private String email;
+
     /**
      * Constructor creates employee object with default vacation days number
      * and the empty projects' list
@@ -41,6 +43,7 @@ public class Employee {
         this.lastName = lastName;
         this.vacationDays = DEFAULT_VACATION_DAYS_IN_YEAR;
         this.assignedProjects = new ArrayList<String>();
+        this.email = name.toLowerCase() + "." + lastName.toLowerCase() + "@amartus.com";
     }
 
     public String getName() {
@@ -73,6 +76,14 @@ public class Employee {
 
     public void setAssignedProjects(ArrayList<String> assignedProjects) {
         this.assignedProjects = assignedProjects;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override

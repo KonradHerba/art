@@ -4,6 +4,7 @@ import com.amartus.domain.Employee;
 import com.amartus.domain.repository.EmployeeRepository;
 import org.springframework.stereotype.Repository;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,5 +26,13 @@ public class InMemoryEmployeeRepository implements EmployeeRepository{
 
     public List<Employee> getAllEmployees() {
         return employeeList;
+    }
+    public String getEmployeeEmail (Employee employee) {
+        for (Employee e : employeeList) {
+            if (e.equals(employee)) {
+                return e.getEmail();
+            }
+        }
+        return "";
     }
 }
