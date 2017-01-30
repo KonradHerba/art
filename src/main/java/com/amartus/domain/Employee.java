@@ -24,11 +24,6 @@ public class Employee {
      * */
     private Integer vacationDays;
 
-    /**
-     * List of projects that the employee is assigned to
-     * */
-    private ArrayList<String> assignedProjects;
-
     private String email;
 
     /**
@@ -42,7 +37,6 @@ public class Employee {
         this.name = name;
         this.lastName = lastName;
         this.vacationDays = DEFAULT_VACATION_DAYS_IN_YEAR;
-        this.assignedProjects = new ArrayList<String>();
         this.email = name.toLowerCase() + "." + lastName.toLowerCase() + "@amartus.com";
     }
 
@@ -68,14 +62,6 @@ public class Employee {
 
     public void setVacationDays(Integer vacationDays) {
         this.vacationDays = vacationDays;
-    }
-
-    public ArrayList<String> getAssignedProjects() {
-        return assignedProjects;
-    }
-
-    public void setAssignedProjects(ArrayList<String> assignedProjects) {
-        this.assignedProjects = assignedProjects;
     }
 
     public String getEmail() {

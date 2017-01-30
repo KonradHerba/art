@@ -22,8 +22,11 @@
                <div class="col-sm-6 col-md-3" style="padding-bottom: 15px">
                   <div class="thumbnail">
                      <div class="caption">
+                        <h3>Dane pracownika:</h3>
                         <p>Imie: ${employee.name}</p>
                         <p>Nazwisko: ${employee.lastName}</p>
+                        <p>Email: ${employee.email}</p>
+                        <p>Dostępne dni urlopowe: ${employee.vacationDays}</p>
                      </div>
                   </div>
                </div>
