@@ -50,6 +50,8 @@ public class InMemoryRepository implements EmployeeRepository{
             report.setProjectsReportData(dailyProjectReports);
 
             reportList.add(report);
+            
+            daysInPeriod--;
 
         } while (daysInPeriod > 0);
 
