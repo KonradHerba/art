@@ -9,5 +9,4 @@ import java.util.List;
  */
 public interface EmployeeRepository {
     List<Employee> getAllEmployees();
-    String getEmployeeEmail (Employee employee);
 }
