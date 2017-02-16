@@ -2,6 +2,7 @@ package com.amartus.controller;
 
 import com.amartus.domain.Employee;
 import com.amartus.domain.repository.EmployeeRepository;
+import com.amartus.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,11 +16,11 @@ import java.io.FileNotFoundException;
 @Controller
 public class EmployeeController {
     @Autowired
-    EmployeeRepository employeeRepository;
+    EmployeeService employeeService;
 
     @RequestMapping("/employees")
     public String displayEmployees(Model model) {
-        model.addAttribute("employees", employeeRepository.getAllEmployees());
+        model.addAttribute("employees", employeeService.getAllEmployees());
 
         return "employees";
     }

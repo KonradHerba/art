@@ -1,6 +1,7 @@
 package com.amartus.controller;
 
-import com.amartus.domain.repository.impl.ReportsRepository;
+import com.amartus.domain.repository.ReportsRepository;
+import com.amartus.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,11 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class ReportController {
     @Autowired
-    ReportsRepository reportsRepository;
+    ReportService reportService;
 
     @RequestMapping("/reports")
     public String showAllReports(Model model) {
-        model.addAttribute("reports", reportsRepository.getAllReports());
+        model.addAttribute("reports", reportService.getAllReports());
 
         return "reports";
     }

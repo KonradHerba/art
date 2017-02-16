@@ -4,6 +4,7 @@ import com.amartus.domain.DailyReport;
 import com.amartus.domain.Employee;
 import com.amartus.domain.ProjectReportData;
 import com.amartus.domain.repository.EmployeeRepository;
+import com.amartus.domain.repository.ReportsRepository;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
@@ -15,12 +16,12 @@ import java.util.List;
  * Created by khe on 2017-01-25.
  */
 @Repository
-public class InMemoryRepository implements EmployeeRepository, ReportsRepository{
+public class InMemoryDB implements EmployeeRepository, ReportsRepository {
 
     List<Employee> employeeList = new ArrayList<Employee>();
     List<DailyReport> reportList = new ArrayList<>();
 
-    InMemoryRepository() {
+    InMemoryDB() {
         //Fake employees
         Employee konrad = new Employee("Konrad", "Herba");
         Employee magdalena = new Employee("Magdalena", "Herba");

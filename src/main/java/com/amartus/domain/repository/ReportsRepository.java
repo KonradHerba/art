@@ -1,4 +1,4 @@
-package com.amartus.domain.repository.impl;
+package com.amartus.domain.repository;
 
 import com.amartus.domain.DailyReport;
 
