@@ -24,7 +24,7 @@
                      <div class="caption">
                         <h3>Dane pracownika:</h3>
                         <p>Imie: ${employee.name}</p>
-                        <p>Nazwisko: ${employee.lastName}</p>
+                        <p>Nazwisko: ${employee.lastname}</p>
                         <p>Email: ${employee.email}</p>
                         <p>Dostępne dni urlopowe: ${employee.vacationDays}</p>
                      </div>

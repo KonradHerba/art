@@ -1,6 +1,7 @@
 package com.amartus.domain.repository;
 
 import com.amartus.domain.DailyReport;
+import com.amartus.domain.Employee;
 
 import java.util.List;
 

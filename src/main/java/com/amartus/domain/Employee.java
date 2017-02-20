@@ -1,7 +1,5 @@
 package com.amartus.domain;
 
-import java.util.ArrayList;
-
 /**
  * Created by khe on 2017-01-24.
  */
@@ -17,7 +15,7 @@ public class Employee {
     /**
      * The last name of the employee
      * */
-    private String lastName;
+    private String lastname;
 
     /**
      * Vacation days available to the employee in the calendar year
@@ -31,13 +29,13 @@ public class Employee {
      * and the empty projects' list
      *
      * @param name  the name of the employee
-     * @param lastName  the last name of the emplyee
+     * @param lastname  the last name of the emplyee
      * */
-    public Employee(String name, String lastName) {
+    public Employee(String name, String lastname) {
         this.name = name;
-        this.lastName = lastName;
+        this.lastname = lastname;
         this.vacationDays = DEFAULT_VACATION_DAYS_IN_YEAR;
-        this.email = name.toLowerCase() + "." + lastName.toLowerCase() + "@amartus.com";
+        this.email = name.toLowerCase() + "." + lastname.toLowerCase() + "@amartus.com";
     }
 
     public String getName() {
@@ -48,12 +46,12 @@ public class Employee {
         this.name = name;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getLastname() {
+        return lastname;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
     public Integer getVacationDays() {
@@ -80,13 +78,13 @@ public class Employee {
         Employee employee = (Employee) o;
 
         if (!getName().equals(employee.getName())) return false;
-        return getLastName().equals(employee.getLastName());
+        return getLastname().equals(employee.getLastname());
     }
 
     @Override
     public int hashCode() {
         int result = getName().hashCode();
-        result = 31 * result + getLastName().hashCode();
+        result = 31 * result + getLastname().hashCode();
         return result;
     }
 }
