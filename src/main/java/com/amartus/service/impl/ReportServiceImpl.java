@@ -35,6 +35,8 @@ public class ReportServiceImpl implements ReportService {
         ReportForm reportForm = new ReportForm();
         List<ProjectReportDataUnit> dailyReportData = new ArrayList<>();
         List<List<ProjectReportDataUnit>> weeklyReport = new ArrayList<>();
+
+        Set<String> projectList = reportsRepository.getAllProjectList();
         LocalDate monday = date.with(TemporalAdjusters.previous( DayOfWeek.MONDAY ));
 
         for (DayOfWeek dayOfWeek : DayOfWeek.values()) {
@@ -65,6 +67,7 @@ public class ReportServiceImpl implements ReportService {
 
         reportForm.setWeeklyReport(weeklyReport);
         reportForm.setReportedDays(reportedDays);
+        reportForm.setProjectList(projectList);
 
         return reportForm;
     }

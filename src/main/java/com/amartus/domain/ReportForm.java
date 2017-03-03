@@ -12,6 +12,26 @@ import java.util.Set;
 public class ReportForm {
     List<List<ProjectReportDataUnit>> weeklyReport = new ArrayList<>();
     Set<LocalDate> reportedDays = new LinkedHashSet<>();
+    Set<String> projectList = new LinkedHashSet<>();
+    Set<String> reportingUnits = new LinkedHashSet<>();
+
+    public ReportForm() {
+        for (int i = 0; i < 14; i++) {
+            reportingUnits.add(String.valueOf(i));
+        }
+    }
+
+    public Set<String> getReportingUnits() {
+        return reportingUnits;
+    }
+
+    public Set<String> getProjectList() {
+        return projectList;
+    }
+
+    public void setProjectList(Set<String> projectList) {
+        this.projectList = projectList;
+    }
 
     public Set<LocalDate> getReportedDays() {
         return reportedDays;

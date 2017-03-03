@@ -31,6 +31,9 @@ public class ReportController {
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String getAddNewWeeklyReportForm (Model model) {
         ReportForm reportForm = reportService.getWeeklyReportTemplate(LocalDate.now());
+        //here I should get dates list for a week
+        //project list from the DB that a certain employee can report on
+        //values for option fields of the form - like hours, etc.
 
         model.addAttribute("reportForm", reportForm);
         return "addWeeklyReport";

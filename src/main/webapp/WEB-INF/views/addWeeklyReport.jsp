@@ -23,37 +23,31 @@
 
 	<section>
 		<div class="container">
+
+		<form:form  modelAttribute="reportForm" class="form-horizontal">
 			<table>
 				<tr>
-  					<th>Project</th>
+  					<th> </th>
 
   					<c:forEach items="${reportForm.reportedDays}" var="day">
-    					<th>
+    					<th style="padding-right: 10px; padding-left: 10px;" >
     						<fmt:parseDate value="${day}" pattern="yyyy-MM-dd" var="parsedDate" type="date" />
 							<fmt:formatDate value="${parsedDate}" var="newParsedDate" type="date" pattern="yyyy-MM-dd" />
-							<%-- fmt:formatDate value="${parsedDate}" var="weekDay" type="date" pattern="E" /--%>
-
-							<p style="text-align:center">${newParsedDate}</p>
-    					</th>
-    				</c:forEach>
-  				</tr>
-  			</table>
-		<form:form  modelAttribute="reportForm" class="form-horizontal">
-			<%--table>
-  				<tr>
-  					<th>Project</th>
-
-  					<c:forEach items="${reportForm.reportedDays}" var="reportedDay" varStatus="day">
-    					<th>
-    						<fmt:parseDate value="${reportedDay}" pattern="yyyy-MM-dd" var="parsedDate" type="date" />
-							<fmt:formatDate value="${parsedDate}" var="newParsedDate" type="date" pattern="yyyy-MM-dd" />
 							<fmt:formatDate value="${parsedDate}" var="weekDay" type="date" pattern="E" />
-
+							
+							<p style="text-align:center">${weekDay}</p>
 							<p style="text-align:center">${newParsedDate}</p>
     					</th>
     				</c:forEach>
   				</tr>
-			</table--%> 
+
+  				<c:forEach items="${reportForm.projectList}" var="projectName">	
+  					<tr>
+  						<td>${projectName}</td>
+  					</tr>	
+  				</c:forEach>
+
+  			</table>
 			<div class="form-group">
 				<div class="col-lg-offset-0 col-lg-10">
 					<input type="submit" id="btnAdd" class="btn btn-primary" value ="Submit Report"/>

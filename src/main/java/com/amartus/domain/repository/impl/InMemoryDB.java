@@ -8,11 +8,10 @@ import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
+import static com.amartus.domain.ArtLiterals.DAY_OFF;
+import static com.amartus.domain.ArtLiterals.HOLIDAY;
 import static com.amartus.domain.ArtLiterals.WORKING_HOURS_PER_DAY;
 
 /**
@@ -136,5 +135,16 @@ public class InMemoryDB implements EmployeeRepository, ReportsRepository {
         }
 
         return filteredEmployees;
+    }
+
+    @Override
+    public Set<String> getAllProjectList() {
+        Set<String> projectList = new LinkedHashSet<>();
+
+        projectList.add("ProjectA");
+        projectList.add(DAY_OFF);
+        projectList.add(HOLIDAY);
+
+        return projectList;
     }
 }
