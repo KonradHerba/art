@@ -1,5 +1,7 @@
 package com.amartus.domain;
 
+import com.amartus.service.impl.IdProvider;
+
 /**
  * Created by khe on 2017-01-24.
  */
@@ -24,6 +26,14 @@ public class Employee {
 
     private String email;
 
+    private int id;
+
+    private String phoneNumber;
+
+    public Employee() {
+        this("","");
+    }
+
     /**
      * Constructor creates employee object with default vacation days number
      * and the empty projects' list
@@ -36,6 +46,8 @@ public class Employee {
         this.lastname = lastname;
         this.vacationDays = DEFAULT_VACATION_DAYS_IN_YEAR;
         this.email = name.toLowerCase() + "." + lastname.toLowerCase() + "@amartus.com";
+        this.id = IdProvider.getId();
+        this.phoneNumber = "";
     }
 
     public String getName() {
@@ -70,6 +82,21 @@ public class Employee {
         this.email = email;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

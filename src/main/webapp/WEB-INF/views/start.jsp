@@ -14,6 +14,20 @@
 					<p> ${tagline} </p>
 				</div>
 			</div>
+
+			<table>
+					<th>as</th>
+					<th>as</th>
+					<th>as</th>									
+
+				<td id = "1">asd</td>
+				<td id = "3">asda</td>
+				<td>asdas</td>
+				<th>asd</th>
+				<td>asd</td>
+
+
+			</table>	
 		</section>
 	</body>
 </html>

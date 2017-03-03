@@ -24,7 +24,7 @@
                      <div class="caption">
                         <h3>Raport:</h3>
                         <p>${report.employee.name}</p>
-                        <p>${report.employee.lastName}</p>
+                        <p>${report.employee.lastname}</p>
                         <p>${report.date}</p>
                         <c:forEach items="${report.projectsReportData}" var="reportData">
                             <p>Project: ${reportData.projectName}</p>
@@ -36,7 +36,6 @@
                   </div>
                </div>
             </c:forEach>
-         </div>
       </section>
    </body>
 </html>

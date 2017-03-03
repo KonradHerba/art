@@ -17,6 +17,12 @@ public class EmployeeServiceImpl implements EmployeeService{
     @Autowired
     EmployeeRepository employeeRepository;
 
+    @Override
+    public void addEmployee(Employee employee) {
+        employeeRepository.addEmployee(employee);
+    }
+
+    @Override
     public List<Employee> getAllEmployees() {
         return employeeRepository.getAllEmployees();
     }

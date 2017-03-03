@@ -1,8 +1,7 @@
 package com.amartus.domain.repository.impl;
 
-import com.amartus.domain.DailyReport;
 import com.amartus.domain.Employee;
-import com.amartus.domain.ProjectReportData;
+import com.amartus.domain.ProjectReportDataUnit;
 import com.amartus.domain.repository.EmployeeRepository;
 import com.amartus.domain.repository.ReportsRepository;
 import org.springframework.stereotype.Repository;
@@ -14,6 +13,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import static com.amartus.domain.ArtLiterals.WORKING_HOURS_PER_DAY;
+
 /**
  * Created by khe on 2017-01-25.
  */
@@ -21,7 +22,7 @@ import java.util.Set;
 public class InMemoryDB implements EmployeeRepository, ReportsRepository {
 
     List<Employee> employeeList = new ArrayList<>();
-    List<DailyReport> reportList = new ArrayList<>();
+    List<ProjectReportDataUnit> reportList = new ArrayList<>();
 
     InMemoryDB() {
         //Fake employees
@@ -34,22 +35,23 @@ public class InMemoryDB implements EmployeeRepository, ReportsRepository {
         //Fake reports
         String projectName = "Fake Project";
         String comment = "fake comment";
-        ProjectReportData projectReportData = new ProjectReportData();
-        List<ProjectReportData> dailyProjectReports = new ArrayList<>();
+        ProjectReportDataUnit projectReportDataUnit = new ProjectReportDataUnit();
+        List<ProjectReportDataUnit> dailyProjectReports = new ArrayList<>();
 
-        projectReportData.setProjectName(projectName);
-        projectReportData.setReportedTime(new BigDecimal(8));
-        projectReportData.setComment(comment);
+        projectReportDataUnit.setProjectName(projectName);
+        projectReportDataUnit.setReportedTime(new BigDecimal(8));
+        projectReportDataUnit.setComment(comment);
 
-        dailyProjectReports.add(projectReportData);
+        dailyProjectReports.add(projectReportDataUnit);
 
         int daysInPeriod = 5;
 
         do {
-            DailyReport report = new DailyReport();
+            ProjectReportDataUnit report = new ProjectReportDataUnit();
             report.setDate(LocalDate.now().minusDays(daysInPeriod));
             report.setEmployee(konrad);
-            report.setProjectsReportData(dailyProjectReports);
+            report.setProjectName("ProjectA");
+            report.setReportedTime(new BigDecimal(WORKING_HOURS_PER_DAY));
 
             reportList.add(report);
 
@@ -62,12 +64,26 @@ public class InMemoryDB implements EmployeeRepository, ReportsRepository {
     }
 
     @Override
+    public void addEmployee(Employee employee) {
+        employeeList.add(employee);
+    }
+
+    @Override
+    public void addNewWeeklyReport(List<List<ProjectReportDataUnit>> weeklyReport) {
+        for (List<ProjectReportDataUnit> dailyReport : weeklyReport) {
+            for (ProjectReportDataUnit report : dailyReport) {
+                reportList.add(report);
+            }
+        }
+    }
+
+    @Override
     public List<Employee> getAllEmployees() {
         return employeeList;
     }
 
     @Override
-    public List<DailyReport> getAllReports() {
+    public List<ProjectReportDataUnit> getAllReports() {
         return reportList;
     }
 

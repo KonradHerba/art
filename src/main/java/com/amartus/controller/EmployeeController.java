@@ -6,9 +6,7 @@ import com.amartus.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.MatrixVariable;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -28,6 +26,20 @@ public class EmployeeController {
         model.addAttribute("employees", employeeService.getAllEmployees());
 
         return "employees";
+    }
+
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    public String getAddNewEmployeeForm (Model model) {
+        Employee newEmployee = new Employee();
+        model.addAttribute("newEmployee", newEmployee);
+        return "addEmployee";
+    }
+
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    public String processAddNewEmployeeForm (@ModelAttribute("newEmployee") Employee newEmployee) {
+        employeeService.addEmployee(newEmployee);
+
+        return "redirect:/employees";
     }
 
     @RequestMapping("/{employeeByCriteria}")
