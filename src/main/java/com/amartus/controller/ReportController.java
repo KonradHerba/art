@@ -1,10 +1,12 @@
 package com.amartus.controller;
 
-import com.amartus.domain.ReportForm;
+import com.amartus.domain.WeeklyReportForm;
 import com.amartus.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,7 +32,7 @@ public class ReportController {
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String getAddNewWeeklyReportForm (Model model) {
-        ReportForm reportForm = reportService.getWeeklyReportTemplate(LocalDate.now());
+        WeeklyReportForm reportForm = reportService.initializeWeeklyReportForm(LocalDate.now());
         //here I should get dates list for a week
         //project list from the DB that a certain employee can report on
         //values for option fields of the form - like hours, etc.
@@ -40,8 +42,9 @@ public class ReportController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String processAddNewWeeklyReportForm (@ModelAttribute("weeklyReport") ReportForm reportForm) {
-        reportService.addNewWeeklyReport(reportForm.getWeeklyReport());
+    public String processAddNewWeeklyReportForm (/*@ModelAttribute("reportForm") WeeklyReportForm reportForm, ModelMap map, BindingResult result*/) {
+        System.out.println("processing POST");
+        //reportService.addNewWeeklyReport(reportForm);
 
         return "redirect:/reports/all";
     }

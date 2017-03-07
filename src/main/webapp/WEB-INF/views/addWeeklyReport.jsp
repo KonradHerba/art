@@ -25,6 +25,12 @@
 		<div class="container">
 
 		<form:form  modelAttribute="reportForm" class="form-horizontal">
+		<div>
+		   	<p style="text-align:left;font-size:140%; padding-up: 10px; padding-down: 120px;">
+  				For employee: <form:select path="employee" items="${reportForm.employees}" />
+  			</p>
+  			<hr>
+  		</div>	
 			<table>
 				<tr>
   					<th> </th>
@@ -39,15 +45,27 @@
 							<p style="text-align:center">${newParsedDate}</p>
     					</th>
     				</c:forEach>
-  				</tr>
-
-  				<c:forEach items="${reportForm.projectList}" var="projectName">	
-  					<tr>
-  						<td>${projectName}</td>
-  					</tr>	
-  				</c:forEach>
-
+  				</tr>	
+  					<c:forEach items="${reportForm.reportData}" var="projectReport" varStatus="row">
+  						<tr>
+  					  		<c:forEach items="${projectReport}" var="projectDailyReport" varStatus="column">
+  					  	    	<td>
+  					  	    		<c:choose>
+   									<c:when test="${column.index == 0}">
+   										<p style="text-align:center"> ${reportForm.reportData[row.index][column.index]} </p>
+   									</c:when> 
+   									<c:otherwise>
+   										<p style="text-align:center">
+  					  	    				<form:select path="reportData[${row.index}][${column.index}]" items="${reportForm.reportingUnits}" />
+  					  	    			</p>
+  					  	    		</c:otherwise>  
+									</c:choose>
+ 						  		</td>								
+ 						  	</c:forEach>
+						</tr>
+					</c:forEach>
   			</table>
+
 			<div class="form-group">
 				<div class="col-lg-offset-0 col-lg-10">
 					<input type="submit" id="btnAdd" class="btn btn-primary" value ="Submit Report"/>

@@ -2,7 +2,8 @@ package com.amartus.service.impl;
 
 import com.amartus.domain.Employee;
 import com.amartus.domain.ProjectReportDataUnit;
-import com.amartus.domain.ReportForm;
+import com.amartus.domain.WeeklyReportForm;
+import com.amartus.domain.repository.EmployeeRepository;
 import com.amartus.domain.repository.ReportsRepository;
 import com.amartus.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,52 +30,84 @@ public class ReportServiceImpl implements ReportService {
     @Autowired
     ReportsRepository reportsRepository;
 
-    @Override
-    public ReportForm getWeeklyReportTemplate(LocalDate date) {
-        Set<LocalDate> reportedDays = new LinkedHashSet<>();
-        ReportForm reportForm = new ReportForm();
-        List<ProjectReportDataUnit> dailyReportData = new ArrayList<>();
-        List<List<ProjectReportDataUnit>> weeklyReport = new ArrayList<>();
+    @Autowired
+    EmployeeRepository employeeRepository;
 
+    @Override
+    public WeeklyReportForm initializeWeeklyReportForm(LocalDate date) {
+        WeeklyReportForm weeklyReportForm = new WeeklyReportForm();
+
+        Set<LocalDate> reportedDays = calculateReportedWeekdays(date);
         Set<String> projectList = reportsRepository.getAllProjectList();
+        Set<String> employees = getEmployeeNamesSet(employeeRepository.getAllEmployees());
+
+        weeklyReportForm.setReportedDays(reportedDays);
+        weeklyReportForm.setProjectList(projectList);
+        weeklyReportForm.setEmployees(employees);
+
+        List<List<String>> reportTable = new ArrayList<>();
+
+        weeklyReportForm.setProjectList(projectList);
+
+        for (String project : projectList){
+            List<String> reportRow = new ArrayList();
+            reportRow.add(project);
+
+            for (LocalDate day : reportedDays) {
+                    reportRow.add("0");
+            }
+            reportTable.add(reportRow);
+        }
+
+        weeklyReportForm.setReportData(reportTable);
+
+        return weeklyReportForm;
+    }
+
+    private Set<String> getEmployeeNamesSet(Set<Employee> employees) {
+        Set<String> employeeNames = new LinkedHashSet<>();
+
+        for (Employee employee : employees) {
+            employeeNames.add(employee.getName() + " " + employee.getLastname());
+        }
+
+        return employeeNames;
+    }
+
+    private Set<LocalDate> calculateReportedWeekdays(LocalDate date) {
+        Set<LocalDate> reportedWeekdays = new LinkedHashSet<>();
+
         LocalDate monday = date.with(TemporalAdjusters.previous( DayOfWeek.MONDAY ));
 
         for (DayOfWeek dayOfWeek : DayOfWeek.values()) {
-            reportedDays.add(monday.plusDays(dayOfWeek.getValue() - 1));
-
-            if (dayOfWeek.equals(DayOfWeek.SATURDAY)) {
-                ProjectReportDataUnit reportDataSaturday = new ProjectReportDataUnit();
-                reportDataSaturday.setProjectName(DAY_OFF);
-                reportDataSaturday.setReportedTime(new BigDecimal(WORKING_HOURS_PER_DAY));
-                dailyReportData.clear();
-                dailyReportData.add(reportDataSaturday);
-            }
-            else if (dayOfWeek.equals(DayOfWeek.SATURDAY)) {
-                ProjectReportDataUnit reportDataSunday = new ProjectReportDataUnit();
-                reportDataSunday.setProjectName(HOLIDAY);
-                reportDataSunday.setReportedTime(new BigDecimal(WORKING_HOURS_PER_DAY));
-                dailyReportData.clear();
-                dailyReportData.add(reportDataSunday);
-            }
-            else {
-                ProjectReportDataUnit reportDataWeekday = new ProjectReportDataUnit();
-                dailyReportData.clear();
-                dailyReportData.add(reportDataWeekday);
-            }
-
-            weeklyReport.add(dailyReportData);
+            LocalDate reportedDay = monday.plusDays(dayOfWeek.getValue() - 1);
+            reportedWeekdays.add(reportedDay);
         }
-
-        reportForm.setWeeklyReport(weeklyReport);
-        reportForm.setReportedDays(reportedDays);
-        reportForm.setProjectList(projectList);
-
-        return reportForm;
+        return reportedWeekdays;
     }
 
     @Override
-    public void addNewWeeklyReport(List<List<ProjectReportDataUnit>> weeklyReport) {
-        reportsRepository.addNewWeeklyReport(weeklyReport);
+    public void addNewWeeklyReport(WeeklyReportForm weeklyReport) {
+        Employee employee = weeklyReport.getEmployee();
+        List<List<String>> weeklyReportData = weeklyReport.getReportData();
+        List<List<ProjectReportDataUnit>> newWeeklyReport = new ArrayList<>();
+
+        for (List<String> projectReports : weeklyReportData) {
+            List<ProjectReportDataUnit> listOfAtomicReports = new ArrayList<>();
+
+            for (String reportDetails : projectReports) {
+                ProjectReportDataUnit atomicReport = new ProjectReportDataUnit();
+                atomicReport.setEmployee(employee);
+                atomicReport.setDate(LocalDate.now());
+                atomicReport.setProjectName("");
+                atomicReport.setReportedTime(new BigDecimal(reportDetails));
+                listOfAtomicReports.add(atomicReport);
+            }
+
+            newWeeklyReport.add(listOfAtomicReports);
+        }
+
+        reportsRepository.addNewWeeklyReport(newWeeklyReport);
     }
 
     @Override

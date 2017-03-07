@@ -17,25 +17,25 @@
 
       </section>
       <section class="container">
-         <div class="row">
+          <h3>Reports' list:</h3>
+            <table width="100%">
+              <tr>
+                <th width="20%" style="text-align:center">Name</th>
+                <th width="20%" style="text-align:center">Lastname</th>
+                <th width="20%" style="text-align:center">Date</th>
+                <th width="20%" style="text-align:center">Project</th>
+                <th width="20%" style="text-align:center">Hours</th>
+              </tr> 
             <c:forEach items="${reports}" var="report">
-               <div class="col-sm-6 col-md-3" style="padding-bottom: 15px">
-                  <div class="thumbnail">
-                     <div class="caption">
-                        <h3>Raport:</h3>
-                        <p>${report.employee.name}</p>
-                        <p>${report.employee.lastname}</p>
-                        <p>${report.date}</p>
-                        <c:forEach items="${report.projectsReportData}" var="reportData">
-                            <p>Project: ${reportData.projectName}</p>
-                            <p>Hours: ${reportData.reportedTime}</p>
-                            <p>Overtime: ${reportData.reportedOvertime}</p>
-                            <p>Comment: ${reportData.comment}</p>
-                        </c:forEach>
-                     </div>
-                  </div>
-               </div>
+                  <tr>                                                  
+                    <td><p style="text-align:center">${report.employee.name}</p></td>
+                    <td><p style="text-align:center">${report.employee.lastname}</p></td>
+                    <td><p style="text-align:center">${report.date}</p></td>
+                    <td><p style="text-align:center">${report.projectName}</p></td>
+                    <td><p style="text-align:center">${report.reportedTime}</p></td>
+                  </tr>
             </c:forEach>
+          </table>
       </section>
    </body>
 </html>

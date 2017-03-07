@@ -20,7 +20,7 @@ import static com.amartus.domain.ArtLiterals.WORKING_HOURS_PER_DAY;
 @Repository
 public class InMemoryDB implements EmployeeRepository, ReportsRepository {
 
-    List<Employee> employeeList = new ArrayList<>();
+    Set<Employee> employeeList = new LinkedHashSet<>();
     List<ProjectReportDataUnit> reportList = new ArrayList<>();
 
     InMemoryDB() {
@@ -38,7 +38,7 @@ public class InMemoryDB implements EmployeeRepository, ReportsRepository {
         List<ProjectReportDataUnit> dailyProjectReports = new ArrayList<>();
 
         projectReportDataUnit.setProjectName(projectName);
-        projectReportDataUnit.setReportedTime(new BigDecimal(8));
+        projectReportDataUnit.setReportedTime(new BigDecimal("8"));
         projectReportDataUnit.setComment(comment);
 
         dailyProjectReports.add(projectReportDataUnit);
@@ -77,7 +77,7 @@ public class InMemoryDB implements EmployeeRepository, ReportsRepository {
     }
 
     @Override
-    public List<Employee> getAllEmployees() {
+    public Set<Employee> getAllEmployees() {
         return employeeList;
     }
 
@@ -87,8 +87,8 @@ public class InMemoryDB implements EmployeeRepository, ReportsRepository {
     }
 
     @Override
-    public List<Employee> getEmployeeByMail(String email) {
-        List<Employee> employeeRecord = new ArrayList<>();
+    public Set<Employee> getEmployeeByMail(String email) {
+        Set<Employee> employeeRecord = new LinkedHashSet<>();
 
         for (Employee e : employeeList) {
             if (e.getEmail().equalsIgnoreCase(email)) employeeRecord.add(e);
@@ -98,9 +98,9 @@ public class InMemoryDB implements EmployeeRepository, ReportsRepository {
     }
 
     @Override
-    public List<Employee> getEmployeeByCriteria(Map<String, List<String>> filterCriteria) {
-        List<Employee> employeesToFilter = employeeList;
-        List<Employee> filteredEmployees = new ArrayList<>();
+    public Set<Employee> getEmployeeByCriteria(Map<String, List<String>> filterCriteria) {
+        Set<Employee> employeesToFilter = employeeList;
+        Set<Employee> filteredEmployees = new LinkedHashSet<>();
 
         Set<String> criteria = filterCriteria.keySet();
 

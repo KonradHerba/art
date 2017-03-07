@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by khe on 2017-02-16.
@@ -23,12 +24,12 @@ public class EmployeeServiceImpl implements EmployeeService{
     }
 
     @Override
-    public List<Employee> getAllEmployees() {
+    public Set<Employee> getAllEmployees() {
         return employeeRepository.getAllEmployees();
     }
 
     @Override
-    public List<Employee> getEmployeeByMail(String email) {
+    public Set<Employee> getEmployeeByMail(String email) {
 
         //We need to add '.com' at the end of the email address.
         //It is a Spring desired behavoiur. Sprint removes everything after
@@ -39,7 +40,7 @@ public class EmployeeServiceImpl implements EmployeeService{
     }
 
     @Override
-    public List<Employee> getEmployeeByCriteria(Map<String, List<String>> filterCriteria) {
+    public Set<Employee> getEmployeeByCriteria(Map<String, List<String>> filterCriteria) {
         return employeeRepository.getEmployeeByCriteria(filterCriteria);
     }
 }
