@@ -147,4 +147,13 @@ public class InMemoryDB implements EmployeeRepository, ReportsRepository {
 
         return projectList;
     }
+
+    @Override
+    public Employee getEmployeeByName(String name, String lastname) {
+        for (Employee employee : employeeList) {
+            if (employee.getName().equals(name) && employee.getLastname().equals(lastname)) return employee;
+        }
+
+        return null;
+    }
 }

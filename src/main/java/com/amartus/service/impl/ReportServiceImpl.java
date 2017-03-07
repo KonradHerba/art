@@ -36,7 +36,7 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public WeeklyReportForm initializeWeeklyReportForm(LocalDate date) {
         WeeklyReportForm weeklyReportForm = new WeeklyReportForm();
-
+        weeklyReportForm.setMondayOfReportedWeek(date.with(TemporalAdjusters.previous( DayOfWeek.MONDAY )));
         Set<LocalDate> reportedDays = calculateReportedWeekdays(date);
         Set<String> projectList = reportsRepository.getAllProjectList();
         Set<String> employees = getEmployeeNamesSet(employeeRepository.getAllEmployees());
@@ -88,20 +88,31 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public void addNewWeeklyReport(WeeklyReportForm weeklyReport) {
-        Employee employee = weeklyReport.getEmployee();
+        //this method is way to large. needs to be splited into mapping method and original add method
+        String employeeString = weeklyReport.getEmployee();
+        String name = employeeString.substring(0,employeeString.indexOf(" "));
+        String lastname = employeeString.substring(employeeString.indexOf(" ") + 1);
+        Employee employee = employeeRepository.getEmployeeByName(name, lastname);
         List<List<String>> weeklyReportData = weeklyReport.getReportData();
         List<List<ProjectReportDataUnit>> newWeeklyReport = new ArrayList<>();
 
         for (List<String> projectReports : weeklyReportData) {
             List<ProjectReportDataUnit> listOfAtomicReports = new ArrayList<>();
+            int projectIndex = 0;
 
             for (String reportDetails : projectReports) {
+                int dateIndex = 0;
                 ProjectReportDataUnit atomicReport = new ProjectReportDataUnit();
-                atomicReport.setEmployee(employee);
-                atomicReport.setDate(LocalDate.now());
-                atomicReport.setProjectName("");
-                atomicReport.setReportedTime(new BigDecimal(reportDetails));
+
+                atomicReport.setEmployee(employee); //OK
+                atomicReport.setDate(LocalDate.now().plusDays(dateIndex)); //NOK
+
+                if(projectIndex == 0) atomicReport.setProjectName(reportDetails); //OK
+                else atomicReport.setReportedTime(new BigDecimal(reportDetails)); //OK
+
                 listOfAtomicReports.add(atomicReport);
+                projectIndex++;
+                dateIndex++;
             }
 
             newWeeklyReport.add(listOfAtomicReports);

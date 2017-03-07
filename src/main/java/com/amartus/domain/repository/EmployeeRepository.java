@@ -11,6 +11,7 @@ import java.util.Set;
  */
 public interface EmployeeRepository {
     void addEmployee(Employee employee);
+    Employee getEmployeeByName(String name, String lastname);
     Set<Employee> getAllEmployees();
     Set<Employee> getEmployeeByMail(String email);
     Set<Employee> getEmployeeByCriteria(Map<String, List<String>> filterCriteria);

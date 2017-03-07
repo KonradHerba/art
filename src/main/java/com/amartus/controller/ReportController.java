@@ -7,10 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 
@@ -33,22 +30,17 @@ public class ReportController {
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String getAddNewWeeklyReportForm (Model model) {
         WeeklyReportForm reportForm = reportService.initializeWeeklyReportForm(LocalDate.now());
-        //here I should get dates list for a week
-        //project list from the DB that a certain employee can report on
-        //values for option fields of the form - like hours, etc.
 
         model.addAttribute("reportForm", reportForm);
         return "addWeeklyReport";
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String processAddNewWeeklyReportForm (/*@ModelAttribute("reportForm") WeeklyReportForm reportForm, ModelMap map, BindingResult result*/) {
-        System.out.println("processing POST");
-        //reportService.addNewWeeklyReport(reportForm);
+    public String processAddNewWeeklyReportForm (@ModelAttribute("reportForm") WeeklyReportForm reportForm) {
+        reportService.addNewWeeklyReport(reportForm);
 
         return "redirect:/reports/all";
     }
-
 
     @RequestMapping("/{employeeByMail}/{reportType}")
     public String displayChosenEmployee(Model model, @PathVariable("employeeByMail") String email, @PathVariable("reportType") String reportType) {

@@ -35,7 +35,7 @@
 				<tr>
   					<th> </th>
 
-  					<c:forEach items="${reportForm.reportedDays}" var="day">
+  					<c:forEach items="${reportForm.reportedDays}" var="day" varStatus="varDay">
     					<th style="padding-right: 10px; padding-left: 10px;" >
     						<fmt:parseDate value="${day}" pattern="yyyy-MM-dd" var="parsedDate" type="date" />
 							<fmt:formatDate value="${parsedDate}" var="newParsedDate" type="date" pattern="yyyy-MM-dd" />
@@ -46,24 +46,26 @@
     					</th>
     				</c:forEach>
   				</tr>	
-  					<c:forEach items="${reportForm.reportData}" var="projectReport" varStatus="row">
-  						<tr>
-  					  		<c:forEach items="${projectReport}" var="projectDailyReport" varStatus="column">
-  					  	    	<td>
-  					  	    		<c:choose>
+  				<c:forEach items="${reportForm.reportData}" var="projectReport" varStatus="row">
+  					<tr>
+  				  		<c:forEach items="${projectReport}" var="projectDailyReport" varStatus="column">
+  				  	    	<td>
+  				  	    		<c:choose>
    									<c:when test="${column.index == 0}">
+   										<form:input path="reportData[${row.index}][${column.index}]" type="hidden" value="${reportForm.reportData[row.index][column.index]}"/>
    										<p style="text-align:center"> ${reportForm.reportData[row.index][column.index]} </p>
    									</c:when> 
    									<c:otherwise>
    										<p style="text-align:center">
   					  	    				<form:select path="reportData[${row.index}][${column.index}]" items="${reportForm.reportingUnits}" />
+  					  	    				<%--form:input id="${row.index}${column.index}" path="reportData[${row.index}][${column.index}]" type="text" class="form:input-large"/--%>
   					  	    			</p>
   					  	    		</c:otherwise>  
-									</c:choose>
- 						  		</td>								
- 						  	</c:forEach>
-						</tr>
-					</c:forEach>
+								</c:choose>
+ 					  		</td>								
+ 					  	</c:forEach>
+					</tr>
+				</c:forEach>
   			</table>
 
 			<div class="form-group">

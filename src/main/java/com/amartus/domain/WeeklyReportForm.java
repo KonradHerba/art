@@ -9,7 +9,8 @@ import java.util.Set;
  * Created by khe on 2017-03-06.
  */
 public class WeeklyReportForm {
-    Employee employee;
+    String employee;
+    LocalDate mondayOfReportedWeek;
     List<List<String>> reportData;
     Set<String> projectList;
     Set<LocalDate> reportedDays;
@@ -29,6 +30,14 @@ public class WeeklyReportForm {
         }
     }
 
+    public LocalDate getMondayOfReportedWeek() {
+        return mondayOfReportedWeek;
+    }
+
+    public void setMondayOfReportedWeek(LocalDate mondayOfReportedWeek) {
+        this.mondayOfReportedWeek = mondayOfReportedWeek;
+    }
+
     public Set<String> getEmployees() {
         return employees;
     }
@@ -37,11 +46,11 @@ public class WeeklyReportForm {
         this.employees = employees;
     }
 
-    public Employee getEmployee() {
+    public String getEmployee() {
         return employee;
     }
 
-    public void setEmployee(Employee employee) {
+    public void setEmployee(String employee) {
         this.employee = employee;
     }
 
